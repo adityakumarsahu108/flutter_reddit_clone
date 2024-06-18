@@ -26,4 +26,21 @@ class Pallete {
     backgroundColor:
         drawerColor, // will be used as alternative background color
   );
+
+  static var lightModeAppTheme = ThemeData.light().copyWith(
+    scaffoldBackgroundColor: whiteColor,
+    cardColor: greyColor,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: whiteColor,
+      elevation: 0,
+      iconTheme: IconThemeData(
+        color: blackColor,
+      ),
+    ),
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: whiteColor,
+    ),
+    primaryColor: redColor,
+    backgroundColor: whiteColor,
+  );
 }
