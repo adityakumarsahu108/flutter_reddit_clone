@@ -43,6 +43,7 @@ class _CommentScreenState extends ConsumerState<CommentScreen> {
       body: ref.watch(getPostsByIdProvider(widget.postId)).when(
             data: (data) {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PostCard(post: data),
                   TextField(
@@ -56,12 +57,14 @@ class _CommentScreenState extends ConsumerState<CommentScreen> {
                   ),
                   ref.watch(getPostCommentsProvider(widget.postId)).when(
                         data: (data) {
-                          return ListView.builder(
-                            itemCount: data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final comment = data[index];
-                              return CommentCard(comment: comment);
-                            },
+                          return Expanded(
+                            child: ListView.builder(
+                              itemCount: data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final comment = data[index];
+                                return CommentCard(comment: comment);
+                              },
+                            ),
                           );
                         },
                         error: (error, stackTrace) =>
