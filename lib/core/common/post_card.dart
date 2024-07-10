@@ -2,6 +2,7 @@ import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reddit_clone/core/constants/constants.dart';
 import 'package:flutter_reddit_clone/features/auth/controller/auth_controller.dart';
+import 'package:flutter_reddit_clone/features/post/controller/add_post_controller.dart';
 import 'package:flutter_reddit_clone/models/post_model.dart';
 import 'package:flutter_reddit_clone/theme/pallete.dart';
 
@@ -13,6 +14,18 @@ class PostCard extends ConsumerWidget {
     super.key,
     required this.post,
   });
+
+  void deletePost(WidgetRef ref, BuildContext context) async {
+    ref.read(postControllerProvider.notifier).deletePost(post, context);
+  }
+
+  void upVotePost(WidgetRef ref) async {
+    ref.read(postControllerProvider.notifier).upvotes(post);
+  }
+
+  void downVotePost(WidgetRef ref) async {
+    ref.read(postControllerProvider.notifier).downvotes(post);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,7 +88,7 @@ class PostCard extends ConsumerWidget {
                               ),
                               if (post.uid == user.uid)
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () => deletePost(ref, context),
                                   icon: Icon(
                                     Icons.delete,
                                     color: Pallete.redColor,
@@ -93,7 +106,7 @@ class PostCard extends ConsumerWidget {
                           ),
                           if (isTypeImage)
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.35,
+                              height: MediaQuery.of(context).size.height * 0.30,
                               width: double.infinity,
                               child: Image.network(
                                 post.link!,
@@ -101,9 +114,9 @@ class PostCard extends ConsumerWidget {
                               ),
                             ),
                           if (isTypeLink)
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.35,
-                              width: double.infinity,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 5),
                               child: AnyLinkPreview(
                                   displayDirection:
                                       UIDirection.uiDirectionHorizontal,
@@ -124,7 +137,7 @@ class PostCard extends ConsumerWidget {
                               Row(
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => upVotePost(ref),
                                     icon: Icon(
                                       Constants.up,
                                       size: 30,
@@ -140,7 +153,7 @@ class PostCard extends ConsumerWidget {
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => downVotePost(ref),
                                     icon: Icon(
                                       Constants.down,
                                       size: 30,
