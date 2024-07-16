@@ -66,7 +66,7 @@ class PostCard extends ConsumerWidget {
           child: Row(
             children: [
               Expanded(
-                child: Column(
+                child: Column(   
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
