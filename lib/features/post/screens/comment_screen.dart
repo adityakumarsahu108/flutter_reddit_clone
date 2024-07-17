@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reddit_clone/core/common/error_text.dart';
 import 'package:flutter_reddit_clone/core/common/loader.dart';
 import 'package:flutter_reddit_clone/core/common/post_card.dart';
-import 'package:flutter_reddit_clone/features/auth/controller/auth_controller.dart';
 import 'package:flutter_reddit_clone/features/post/controller/add_post_controller.dart';
 import 'package:flutter_reddit_clone/features/post/widgets/comment_card.dart';
 import 'package:flutter_reddit_clone/models/post_model.dart';
@@ -39,8 +38,8 @@ class _CommentScreenState extends ConsumerState<CommentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(userProvider)!;
-    final isGuest = user.isAuthenticated;
+    // final user = ref.watch(userProvider)!;
+    // final isGuest = user.isAuthenticated;
     return Scaffold(
       appBar: AppBar(),
       body: ref.watch(getPostsByIdProvider(widget.postId)).when(
@@ -49,16 +48,15 @@ class _CommentScreenState extends ConsumerState<CommentScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PostCard(post: data),
-                  if (!isGuest)
-                    TextField(
-                      onSubmitted: (val) => addComment(data),
-                      controller: commentController,
-                      decoration: const InputDecoration(
-                        hintText: 'What are your thoughts?',
-                        filled: true,
-                        border: InputBorder.none,
-                      ),
+                  TextField(
+                    onSubmitted: (val) => addComment(data),
+                    controller: commentController,
+                    decoration: const InputDecoration(
+                      hintText: 'What are your thoughts?',
+                      filled: true,
+                      border: InputBorder.none,
                     ),
+                  ),
                   ref.watch(getPostCommentsProvider(widget.postId)).when(
                         data: (data) {
                           return Expanded(
